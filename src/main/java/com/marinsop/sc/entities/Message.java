@@ -14,7 +14,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String message;
+    private String content;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sender_id",referencedColumnName = "id")

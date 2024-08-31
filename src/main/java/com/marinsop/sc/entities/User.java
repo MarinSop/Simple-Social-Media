@@ -1,6 +1,5 @@
 package com.marinsop.sc.entities;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,7 +42,7 @@ public class User {
     private Set<Friendship> friendshipsTwo = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private Set<Like> likes = new HashSet<>();
+    private Set<ULike> ULikes = new HashSet<>();
 
 
 }

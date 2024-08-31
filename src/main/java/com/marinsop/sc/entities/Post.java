@@ -27,7 +27,7 @@ public class Post {
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "post")
-    private Set<Like> likes = new HashSet<>();
+    private Set<ULike> ULikes = new HashSet<>();
 
 
 }

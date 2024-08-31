@@ -18,7 +18,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String comment;
+    private String content;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -28,6 +28,6 @@ public class Comment {
     private Post post;
 
     @OneToMany(mappedBy = "comment")
-    private Set<Like> likes = new HashSet<>();
+    private Set<ULike> ULikes = new HashSet<>();
 
 }
