@@ -4,10 +4,12 @@ import com.marinsop.sc.dtos.LoginDTO;
 import com.marinsop.sc.dtos.LoginResponse;
 import com.marinsop.sc.dtos.RegisterDTO;
 import com.marinsop.sc.entities.User;
+import com.marinsop.sc.exceptions.UserAlreadyExistsException;
 import com.marinsop.sc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public List<User> getAll()
@@ -40,9 +44,10 @@ public class UserService {
 
     public User register(RegisterDTO registerDto)
     {
+        userRepository.findByUsername(registerDto.getUsername()).ifPresent(u -> {throw new UserAlreadyExistsException("User already exists");});
         User user = new User();
         user.setUsername(registerDto.getUsername());
-        user.setPassword(registerDto.getPassword());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setFirstName(registerDto.getFirstName());
         user.setLastName(registerDto.getLastName());
         user.setBio(registerDto.getBio());
