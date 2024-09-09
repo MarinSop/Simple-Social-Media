@@ -1,7 +1,6 @@
 package com.marinsop.sc.components;
 
-import com.marinsop.sc.exceptions.ErrorResponse;
-import com.marinsop.sc.exceptions.UserAlreadyExistsException;
+import com.marinsop.sc.exceptions.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -53,5 +52,22 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public @ResponseBody ErrorResponse handleException(ExpiredJwtException ex) {
         return new ErrorResponse(ex.getMessage(),HttpStatus.FORBIDDEN.value());
+    }
+
+    @ExceptionHandler(value = UserNotFound.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(UserNotFound ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
+    }
+    @ExceptionHandler(value = FriendshipAlreadyExists.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(FriendshipAlreadyExists ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(value = FriendshipNotFound.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(FriendshipNotFound ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
     }
 }

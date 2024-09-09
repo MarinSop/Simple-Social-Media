@@ -15,10 +15,10 @@ public class Friendship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_one_id", referencedColumnName = "id")
     private User userOne;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_two_id", referencedColumnName = "id")
     private User userTwo;
 }
