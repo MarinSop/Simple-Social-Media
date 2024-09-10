@@ -70,4 +70,22 @@ public class GlobalExceptionHandler {
     public @ResponseBody ErrorResponse handleException(FriendshipNotFound ex) {
         return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
     }
+
+    @ExceptionHandler(value = PostNotFound.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(PostNotFound ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(value = CommentNotFound.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(CommentNotFound ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(value = InvalidTarget.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public @ResponseBody ErrorResponse handleException(InvalidTarget ex) {
+        return new ErrorResponse(ex.getMessage(),HttpStatus.UNAUTHORIZED.value());
+    }
 }
