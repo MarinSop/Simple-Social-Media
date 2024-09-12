@@ -18,6 +18,7 @@ public class Friendship {
     @ManyToOne()
     @JoinColumn(name = "user_one_id", referencedColumnName = "id")
     private User userOne;
+
     @ManyToOne()
     @JoinColumn(name = "user_two_id", referencedColumnName = "id")
     private User userTwo;

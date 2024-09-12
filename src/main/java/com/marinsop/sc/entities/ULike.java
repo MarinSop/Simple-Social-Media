@@ -15,14 +15,14 @@ public class ULike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     private Comment comment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

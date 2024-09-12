@@ -1,5 +1,6 @@
 package com.marinsop.sc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,22 +30,31 @@ public class User implements UserDetails {
     private String lastName;
     private String bio;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Post> posts = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private Set<Message> sentMessages = new HashSet<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private Set<Message> receivedMessages = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userOne")
     private Set<Friendship> friendshipsOne = new HashSet<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "userTwo")
     private Set<Friendship> friendshipsTwo = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<ULike> ULikes = new HashSet<>();
 

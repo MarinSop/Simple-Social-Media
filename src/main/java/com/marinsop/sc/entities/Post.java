@@ -1,5 +1,6 @@
 package com.marinsop.sc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,12 +21,15 @@ public class Post {
 
     private String content;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "post")
     private Set<Comment> comments = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post")
     private Set<ULike> ULikes = new HashSet<>();
 

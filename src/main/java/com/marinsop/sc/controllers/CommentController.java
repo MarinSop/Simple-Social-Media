@@ -23,16 +23,16 @@ public class CommentController {
         return ResponseEntity.ok(commentService.findAllPostComments(postId));
     }
 
-    @PostMapping("/post/{postId}")
-    public ResponseEntity<Comment> addCommentToPost(@AuthenticationPrincipal User user, @PathVariable("postId") int postId, @RequestBody CommentDTO comment)
+    @PostMapping("")
+    public ResponseEntity<Comment> addCommentToPost(@AuthenticationPrincipal User user, @RequestBody CommentDTO comment)
     {
-        return ResponseEntity.ok(commentService.addCommentToPost(user,postId,comment));
+        return ResponseEntity.ok(commentService.addCommentToPost(user,comment));
     }
 
     @PutMapping("")
     public ResponseEntity<Comment> editComment(@AuthenticationPrincipal User user, @RequestBody Comment editedComment)
     {
-        return ResponseEntity.ok(commentService.editComment(user.getId(), editedComment));
+        return ResponseEntity.ok(commentService.editComment(user, editedComment));
     }
 
     @DeleteMapping("/{commentId}")

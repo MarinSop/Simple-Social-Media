@@ -11,6 +11,7 @@ import com.marinsop.sc.repositories.CommentRepository;
 import com.marinsop.sc.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
     private PostRepository postRepository;
 
     public List<Comment> findAllPostComments(int postId)
@@ -26,22 +28,22 @@ public class CommentService {
         return commentRepository.findAllByPostId(postId);
     }
 
-    public Comment addCommentToPost(User user, int postId, CommentDTO comment)
+    @Transactional
+    public Comment addCommentToPost(User user, CommentDTO comment)
     {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFound("Post not found."));
+        Post post = postRepository.findById(comment.getPostId()).orElseThrow(() -> new PostNotFound("Post not found."));
         Comment newComment = new Comment();
         newComment.setContent(comment.getContent());
         newComment.setUser(user);
         newComment.setPost(post);
-        System.out.println(newComment);
         return commentRepository.save(newComment);
 
     }
 
-    public Comment editComment(int userId, Comment newComment)
+    public Comment editComment(User user, Comment newComment)
     {
         Comment comment = commentRepository.findById(newComment.getId()).orElseThrow(() -> new CommentNotFound("Comment not found."));
-        if(newComment.getUser().getId() != userId)
+        if(newComment.getUser().getId() != user.getId())
         {
             throw new InvalidTarget("Invalid user id.");
         }
