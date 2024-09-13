@@ -4,7 +4,7 @@ import com.marinsop.sc.dtos.LoginDTO;
 import com.marinsop.sc.dtos.LoginResponse;
 import com.marinsop.sc.dtos.RegisterDTO;
 import com.marinsop.sc.entities.User;
-import com.marinsop.sc.exceptions.UserAlreadyExistsException;
+import com.marinsop.sc.exceptions.EntityAlreadyExists;
 import com.marinsop.sc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +44,7 @@ public class UserService {
 
     public User register(RegisterDTO registerDto)
     {
-        userRepository.findByUsername(registerDto.getUsername()).ifPresent(u -> {throw new UserAlreadyExistsException("User already exists");});
+        userRepository.findByUsername(registerDto.getUsername()).ifPresent(u -> {throw new EntityAlreadyExists("User already exists");});
         User user = new User();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));

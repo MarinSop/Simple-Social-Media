@@ -3,8 +3,6 @@ package com.marinsop.sc.components;
 import com.marinsop.sc.exceptions.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,9 +16,9 @@ import java.security.SignatureException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = UserAlreadyExistsException.class)
+    @ExceptionHandler(value = EntityAlreadyExists.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(UserAlreadyExistsException ex) {
+    public @ResponseBody ErrorResponse handleException(EntityAlreadyExists ex) {
         return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
     }
 
@@ -54,32 +52,9 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(ex.getMessage(),HttpStatus.FORBIDDEN.value());
     }
 
-    @ExceptionHandler(value = UserNotFound.class)
+    @ExceptionHandler(value = EntityNotFound.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(UserNotFound ex) {
-        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
-    }
-    @ExceptionHandler(value = FriendshipAlreadyExists.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(FriendshipAlreadyExists ex) {
-        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
-    }
-
-    @ExceptionHandler(value = FriendshipNotFound.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(FriendshipNotFound ex) {
-        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
-    }
-
-    @ExceptionHandler(value = PostNotFound.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(PostNotFound ex) {
-        return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
-    }
-
-    @ExceptionHandler(value = CommentNotFound.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(CommentNotFound ex) {
+    public @ResponseBody ErrorResponse handleException(EntityNotFound ex) {
         return new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value());
     }
 

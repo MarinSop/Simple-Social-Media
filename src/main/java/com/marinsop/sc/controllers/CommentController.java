@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Comment> editComment(@AuthenticationPrincipal User user, @RequestBody Comment editedComment)
+    public ResponseEntity<Comment> editComment(@AuthenticationPrincipal User user, @RequestBody CommentDTO editedComment)
     {
         return ResponseEntity.ok(commentService.editComment(user, editedComment));
     }

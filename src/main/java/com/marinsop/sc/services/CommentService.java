@@ -4,9 +4,8 @@ import com.marinsop.sc.dtos.CommentDTO;
 import com.marinsop.sc.entities.Comment;
 import com.marinsop.sc.entities.Post;
 import com.marinsop.sc.entities.User;
-import com.marinsop.sc.exceptions.CommentNotFound;
+import com.marinsop.sc.exceptions.EntityNotFound;
 import com.marinsop.sc.exceptions.InvalidTarget;
-import com.marinsop.sc.exceptions.PostNotFound;
 import com.marinsop.sc.repositories.CommentRepository;
 import com.marinsop.sc.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,14 @@ public class CommentService {
 
     public List<Comment> findAllPostComments(int postId)
     {
-        postRepository.findById(postId).orElseThrow(() -> new PostNotFound("Post not found."));
+        postRepository.findById(postId).orElseThrow(() -> new EntityNotFound("Post not found."));
         return commentRepository.findAllByPostId(postId);
     }
 
     @Transactional
     public Comment addCommentToPost(User user, CommentDTO comment)
     {
-        Post post = postRepository.findById(comment.getPostId()).orElseThrow(() -> new PostNotFound("Post not found."));
+        Post post = postRepository.findById(comment.getPostId()).orElseThrow(() -> new EntityNotFound("Post not found."));
         Comment newComment = new Comment();
         newComment.setContent(comment.getContent());
         newComment.setUser(user);
@@ -40,10 +39,10 @@ public class CommentService {
 
     }
 
-    public Comment editComment(User user, Comment newComment)
+    public Comment editComment(User user, CommentDTO newComment)
     {
-        Comment comment = commentRepository.findById(newComment.getId()).orElseThrow(() -> new CommentNotFound("Comment not found."));
-        if(newComment.getUser().getId() != user.getId())
+        Comment comment = commentRepository.findById(newComment.getId()).orElseThrow(() -> new EntityNotFound("Comment not found."));
+        if(newComment.getUserId() != user.getId())
         {
             throw new InvalidTarget("Invalid user id.");
         }
@@ -55,7 +54,7 @@ public class CommentService {
 
     public Comment deleteComment(int userId, int commentId)
     {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFound("Comment not found."));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFound("Comment not found."));
         if(comment.getUser().getId() != userId)
         {
             throw new InvalidTarget("Invalid user id.");
