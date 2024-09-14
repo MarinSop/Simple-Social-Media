@@ -1,9 +1,11 @@
 package com.marinsop.sc.controllers;
 
 import com.marinsop.sc.entities.Friendship;
+import com.marinsop.sc.entities.User;
 import com.marinsop.sc.services.FriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,15 +22,15 @@ public class FriendshipController {
         return ResponseEntity.ok(friendshipService.findAllUsersFriends(userId));
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Friendship> addFriend(@RequestParam("userOneId") int userOneId, @RequestParam("userTwoId") int userTwoId)
+    @PostMapping("/{userTwoId}")
+    public ResponseEntity<Friendship> addFriend(@AuthenticationPrincipal User userOne, @PathVariable("userTwoId") int userTwoId)
     {
-        return ResponseEntity.ok(friendshipService.add(userOneId,userTwoId));
+        return ResponseEntity.ok(friendshipService.addFriend(userOne,userTwoId));
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<Friendship> deleteFriend(@RequestParam("userOneId") int userOneId, @RequestParam("userTwoId") int userTwoId)
+    @DeleteMapping("/{userTwoId}")
+    public ResponseEntity<Friendship> deleteFriend(@AuthenticationPrincipal User userOne, @PathVariable("userTwoId") int userTwoId)
     {
-        return ResponseEntity.ok(friendshipService.deleteFriend(userOneId,userTwoId));
+        return ResponseEntity.ok(friendshipService.deleteFriend(userOne,userTwoId));
     }
 }

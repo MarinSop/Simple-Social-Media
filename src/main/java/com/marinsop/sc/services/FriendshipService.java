@@ -23,20 +23,19 @@ public class FriendshipService {
         return friendshipRepository.findAllUsersFriends(userId);
     }
 
-    public Friendship add(int userOneId,int userTwoId)
+    public Friendship addFriend(User userOne,int userTwoId)
     {
-        User userOne = userRepository.findById(userOneId).orElseThrow(() -> new EntityNotFound("User not found."));
         User userTwo = userRepository.findById(userTwoId).orElseThrow(() -> new EntityNotFound("User not found."));
-        friendshipRepository.findByUsersId(userOneId,userTwoId).ifPresent(f -> {throw new EntityAlreadyExists("Friendship already exists.");});
+        friendshipRepository.findByUsersId(userOne.getId(),userTwoId).ifPresent(f -> {throw new EntityAlreadyExists("Friendship already exists.");});
         Friendship friendship = new Friendship();
         friendship.setUserOne(userOne);
         friendship.setUserTwo(userTwo);
         return friendshipRepository.save(friendship);
     }
 
-    public Friendship deleteFriend(int userOneId, int userTwoId)
+    public Friendship deleteFriend(User userOne, int userTwoId)
     {
-        Friendship friendship = friendshipRepository.findByUsersId(userOneId,userTwoId).orElseThrow(() -> new EntityNotFound("Friendship not found."));
+        Friendship friendship = friendshipRepository.findByUsersId(userOne.getId(),userTwoId).orElseThrow(() -> new EntityNotFound("Friendship not found."));
         friendshipRepository.delete(friendship);
         return(friendship);
     }
